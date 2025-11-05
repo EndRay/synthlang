@@ -1,0 +1,14 @@
+button.rebuild {
+    background-color: hsl(217, 100%, 59%);
+    color: hsl(0, 0%, 0%);
+    border: none;
+    padding: 6px 10px;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    border-radius: 4px;
+}
+
+button.rebuild:disabled {
+    opacity: 65%;
+}

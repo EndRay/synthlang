@@ -1,0 +1,76 @@
+.cm-editor .tok-keyword {
+    color: #9254a2;
+}
+
+.cm-editor .tok-operator {
+    color: #56b6c2;
+}
+
+.cm-editor .tok-identifier {
+    color: #abb2bf;
+}
+
+.cm-editor .tok-number {
+    color: #ffd87a;
+}
+
+.cm-editor .tok-string {
+    color: #98c379;
+}
+
+.cm-editor .tok-punct {
+    color: #5c6370;
+}
+
+.cm-editor .tok-unit {
+    color: hsl(197, 35%, 62%);
+}
+
+.cm-editor .tok-class {
+    color: hsl(0, 100%, 82%);
+}
+
+
+.cm-editor .tok-socket {
+    color: hsl(0, 100%, 85%);
+}
+
+.cm-editor .tok-output {
+    color: hsl(217, 96%, 82%);
+}
+
+.cm-editor .tok-constdef {
+    color: hsl(0, 0%, 100%);
+}
+
+.cm-editor .tok-const {
+    color: hsl(0, 0%, 84%);
+}
+
+.cm-editor .tok-builtin {
+    color: hsl(284, 100%, 78%);
+}
+
+.cm-editor .tok-class-Oscillator {
+    color: hsl(112, 54%, 56%);
+}
+.cm-editor .tok-class-Envelope {
+    color: hsl(0, 100%, 73%);
+}
+.cm-editor .tok-class-Filter {
+    color: hsl(211, 100%, 62%);
+}
+.cm-editor .tok-class-Effect {
+    color: hsl(47, 96%, 74%);
+}
+.cm-editor .tok-class-UserInterface {
+    color: hsl(284, 100%, 78%);
+}
+.cm-editor .tok-class-Utility {
+    color: hsl(163, 100%, 88%);
+}
+
+.cm-editor .tok-const.tok-known-class,
+.cm-editor .tok-builtin.tok-known-class {
+    filter: saturate(0.9) brightness(0.9);
+}

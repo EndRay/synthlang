@@ -1,0 +1,22 @@
+.ͼ1 .cm-panel.cm-panel-lint ul [aria-selected] {
+    background-color: hsl(120, 0%, 20%);
+}
+.ͼ1 .cm-panel.cm-panel-lint ul:focus [aria-selected] {
+    background-color: hsl(120, 0%, 40%);
+}
+
+.ͼ1 .cm-lintRange-active {
+    background-color: revert;
+}
+
+.cm-diagnostic-unused {
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+.cm-lintRange.cm-lintRange-warning.cm-diagnostic-unused {
+    background-image: none;
+}
+
+.cm-diagnostic-unused span {
+    color: #797d84 !important;
+}

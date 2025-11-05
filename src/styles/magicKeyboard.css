@@ -1,0 +1,46 @@
+.music-keyboard {
+    user-select: none;
+    font-weight: bold;
+    background: hsl(0, 0%, 35%);
+    padding: 5px;
+    border-radius: 10px;
+    transition: background-color 0.5s, color 0.5s;
+}
+.music-keyboard:hover {
+    cursor: pointer;
+    background: hsl(0, 0%, 45%);
+}
+.music-keyboard:focus {
+    color: hsl(240, 60%, 30%);
+    background: linear-gradient(230deg,
+        #ff6ec4, #7873f5, #4ade80, #f9cb28,
+        #ff6ec4, #7873f5, #4ade80, #f9cb28,
+        #ff6ec4) 0 0 / 300% 300%;
+    /* play turn animation then pop animation */
+    animation: gradientAnimation 5s linear infinite,
+               popAnimation 0.3s ease-in-out;
+}
+.music-keyboard:focus-visible {
+    outline: none;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 90% 50%;
+    }
+}
+
+@keyframes popAnimation {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.97);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
