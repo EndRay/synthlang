@@ -54,7 +54,7 @@ export const AudioPlayer = forwardRef<AudioPlayerHandle, AudioPlayerProps>(({ ma
         await ctx.resume();
       }
 
-      await ctx.audioWorklet.addModule('/worklets/queue-player.js');
+      await ctx.audioWorklet.addModule(`${process.env.PUBLIC_URL}/worklets/queue-player.js`);
 
       const node = new AudioWorkletNode(ctx, 'queue-player', {
         numberOfInputs: 0,
