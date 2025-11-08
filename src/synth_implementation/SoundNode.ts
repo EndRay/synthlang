@@ -4,7 +4,7 @@ import {
   UserInput,
   UserStereoInput,
   UserOutput,
-  UserStereoOutput,
+  UserStereoOutput, Knob,
 } from "./user_interface/io";
 import {Attenuator} from "./utilities/Attenuator";
 import {Inverter} from "./utilities/Inverter";
@@ -16,6 +16,7 @@ export const CLASS_NAME_TO_SOUND_NODE_CONSTRUCTOR: { [className: string]: () => 
   UserStereoInput: () => new UserStereoInput(),
   UserOutput: () => new UserOutput(),
   UserStereoOutput: () => new UserStereoOutput(),
+  Knob: () => new Knob(),
 
   Inverter: () => new Inverter(),
   Attenuator: () => new Attenuator(),

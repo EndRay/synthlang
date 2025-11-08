@@ -1,6 +1,6 @@
 import {LexicalError, LexResult, Token, TokenType} from "./tokens";
 
-const KEYWORDS = new Set(["new", "bi", "startvoice", "endvoice"]);
+const KEYWORDS = new Set(["bi", "startvoice", "endvoice"]);
 const OPERATORS = new Set(["+", "-", "*", "=", "=>", "<="]);
 const SORTED_OPERATORS = Array.from(OPERATORS).sort((a, b) => b.length - a.length);
 const PUNCTUATIONS = new Set(["(", ")", "[", "]", ",", ".", ":"]);

@@ -1,0 +1,56 @@
+.fader {
+    user-select: none;
+    display: flex;
+    position: relative;
+    align-items: center;
+    height: 60px;
+    flex-shrink: 0;
+}
+
+.fader-label,
+.fader-value {
+    font-size: 20px;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.fader-label {
+    width: 90px;
+    padding-left: 6px;
+    text-align: right;
+    overflow-wrap: break-word;
+}
+
+.fader-value {
+    width: 50px;
+    text-align: left;
+}
+
+.fader-control {
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    margin: 0 10px;
+    height: 24px;
+    position: relative;
+}
+
+.fader-track {
+    flex-grow: 1;
+    background-color: hsl(240, 20%, 5%);
+    height: 10px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.fader-thumb {
+    position: absolute;
+    width: 14px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: hsl(218, 4%, 30%);
+
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+}

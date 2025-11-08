@@ -87,38 +87,16 @@ export const BASIC_CLASSES: SoundNodeClassInfo[] = [
   KnobClass,
 ] // Classes necessary for basic functionality
 
-export const CLASSES_LIST: SoundNodeClassInfo[] = [
+export const classesList: SoundNodeClassInfo[] = [
   ...BASIC_CLASSES,
-  {
-    className: "Noise",
-    classGroup: "Noise",
-    sockets: [],
-    outputs: ["output"],
-    positionalArgs: [],
-  },
-  {
-    className: "Drive",
-    classGroup: "Effect",
-    sockets: [
-      ["gain", "g"],
-      "input"
-    ],
-    outputs: ["output"],
-    positionalArgs: [],
-  },
-  {
-    className: "StereoReverb",
-    classGroup: "Effect",
-    sockets: [
-      ["decayTime", "time", "t"],
-      "left",
-      "right"
-    ],
-    outputs: ["left", "right"],
-    positionalArgs: ["decayTime"],
-  },
 ]
 
+export const classesAlias: Map<string, SoundNodeClassInfo> = new Map();
+
 export function registerSoundNodeClass(cls: SoundNodeClassInfo) {
-  CLASSES_LIST.push(cls);
+  classesList.push(cls);
+}
+
+export function registerSoundNodeClassAlias(alias: string, className: string) {
+  classesAlias.set(alias, classesList.find(cls => cls.className === className)!);
 }

@@ -5,7 +5,7 @@ import { getAudioContext } from '../audioContext'; // Assuming you have this sin
 
 // --- Configuration Constants ---
 const PREFILL_CHUNKS = 5;
-const CHUNK_FRAMES = 256; // Standard buffer size for audio worklets
+export const CHUNK_FRAMES = 256; // Standard buffer size for audio worklets
 
 // --- Type Definitions ---
 

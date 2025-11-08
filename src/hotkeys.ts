@@ -18,6 +18,10 @@ export const HOTKEY_CHANGE_FOCUS: HotkeyDefinition = {
   mod: true,
 };
 
+export const HOTKEY_CHANGE_FOCUS_FROM_MUSIC_KEYBOARD: HotkeyDefinition = {
+  key: 'Escape',
+}
+
 export const MK_OCTAVE_DOWN: HotkeyDefinition = { key: "[" };
 export const MK_OCTAVE_UP: HotkeyDefinition = { key: "]" };
 export const MK_LOW_KEYS_IN_ORDER = "zsxdcvgbhnjm,l.;/"

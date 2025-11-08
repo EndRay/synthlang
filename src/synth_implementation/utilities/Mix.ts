@@ -2,7 +2,7 @@ import {SoundNode} from "../SoundNode";
 
 const INFO = {
   className: "Mix",
-  classGroup: "Utilities",
+  classGroup: "Utility",
   sockets: ["input"],
   outputs: ["output"],
   positionalArgs: ["input"],

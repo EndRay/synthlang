@@ -14,7 +14,7 @@ import {
 import {IdentifierResolution, Resolver} from "../language/Resolver";
 import {LeafsCollector} from "./LeafsCollector";
 import {SoundNodeClassInfo} from "../language/SoundNodeClassInfo";
-import {CLASSES_LIST} from "../language/classes";
+import {classesList} from "../language/classes";
 import {Lexer} from "../language/Lexer";
 import {IRBuilder} from "../language/IRBuilder";
 
@@ -51,7 +51,7 @@ function buildDecorations(view: EditorView): DecorationSet {
   const docText = view.state.doc.toString();
   const lexResult = new Lexer(docText).lex();
   const parseResult = new Parser(lexResult).parse();
-  const resolveResult = new Resolver(parseResult, CLASSES_LIST).resolve();
+  const resolveResult = new Resolver(parseResult, classesList).resolve();
 
   const {tokens} = lexResult;
 
@@ -103,10 +103,7 @@ function buildDecorations(view: EditorView): DecorationSet {
   }
 
   function resolveClass(name: string): SoundNodeClassInfo | null {
-    for (const cls of CLASSES_LIST) {
-      if (cls.className === name) return cls;
-    }
-    return null;
+    return resolveResult.resolvedClasses.get(name) ?? null;
   }
 
   function pushConstIdentifier(name: Identifier, scope: "global" | "voice") {

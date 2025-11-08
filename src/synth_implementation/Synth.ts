@@ -1,18 +1,7 @@
 import {SynthStructure} from "../language/SynthStructure";
 import {CLASS_NAME_TO_SOUND_NODE_CONSTRUCTOR, SoundNode} from "./SoundNode";
-import {UserInput, UserOutput, UserStereoOutput} from "./user_interface/io";
-import {
-  convertConstant,
-  fromCents,
-  fromDecibels,
-  fromHertz,
-  fromHours,
-  fromMilliseconds,
-  fromMinutes,
-  fromSeconds,
-  fromSemitones, toHertz
-} from "./conversions";
-import {GLOBAL_BUILTIN, VOICE_BUILTIN} from "../language/builtin";
+import {Knob, UserInput, UserStereoOutput} from "./user_interface/io";
+import {convertConstant, fromHertz} from "./conversions";
 
 const VOICE_RELEASED = 0;
 const VOICE_PRESSED = 1;
@@ -36,6 +25,9 @@ export class Synth {
   private readonly voiceTriggerInputs: UserInput[] = [];
   private readonly voicePitchInputs: UserInput[] = [];
   private readonly voiceVelocityInputs: UserInput[] = [];
+
+  private readonly knobInputs: { [knobName: string]: Knob } = {};
+  readonly knobNames: string[] = [];
 
   private objects: SoundNode[] = [];
 
@@ -166,6 +158,12 @@ export class Synth {
       this.voiceVelocityInputs.push(this.objects[uniqueIdToVoiceId[velocityInputPos] + v] as UserInput);
     }
 
+    this.knobNames.push(...synthStructure.userCustomInputNames);
+    for(let i = 0; i < synthStructure.userCustomInputNames.length; i++) {
+      this.knobInputs[synthStructure.userCustomInputNames[i]] =
+        this.objects[uniqueIdToVoiceId[synthStructure.userCustomInputIds[i]]] as Knob;
+    }
+
     for(let v = 0; v < voicesCount; v++) {
       this.voiceState.push(VOICE_RELEASED);
       this.voiceTiming.push(0);
@@ -178,13 +176,19 @@ export class Synth {
     console.log(this.outputValues);
   }
 
+  setKnobValue(knobName: string, value: number): void {
+    if(knobName in this.knobInputs) {
+      this.knobInputs[knobName].setValue(value);
+    }
+  }
+
   pressNote(midiNote: number, velocity: number): void {
     this.gateInput.setValue(1);
     this.triggerInput.setValue(1);
     this.pitchInput.setValue(Synth.noteToPitch(midiNote));
     this.velocityInput.setValue(velocity);
 
-    let voiceToUse: number | null = null;
+    let voiceToUse: number | null;
     if(midiNote in this.noteToVoice) {
       voiceToUse = this.noteToVoice[midiNote];
     }
@@ -222,7 +226,7 @@ export class Synth {
     this.voiceVelocityInputs[voiceToUse].setValue(velocity);
   }
 
-  releaseNote(midiNote: number, releaseVelocity: number): void {
+  releaseNote(midiNote: number, _releaseVelocity: number): void {
     this.gateInput.setValue(0);
     // TODO: use releaseVelocity
 

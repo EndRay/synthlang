@@ -1,7 +1,7 @@
 import {Diagnostic, linter} from "@codemirror/lint";
 import {Parser} from "../language/Parser";
 import {Resolver} from "../language/Resolver";
-import {CLASSES_LIST} from "../language/classes";
+import {classesList} from "../language/classes";
 import {Lexer} from "../language/Lexer";
 import {InterpretationError, IRBuilder} from "../language/IRBuilder";
 
@@ -9,7 +9,7 @@ export const myLanguageLinter = linter((view) => {
   const doc = view.state.doc;
   const lexResult = new Lexer(doc.toString()).lex();
   const parseResult = new Parser(lexResult).parse();
-  const resolveResult = new Resolver(parseResult, CLASSES_LIST).resolve();
+  const resolveResult = new Resolver(parseResult, classesList).resolve();
   const {lexicalErrors} = lexResult;
   const {syntaxErrors} = parseResult;
   const {semanticErrors} = resolveResult;
@@ -63,7 +63,7 @@ export const myLanguageLinter = linter((view) => {
   const interpretationDiagnostics: Diagnostic[] = interpretationErrors.map((err): Diagnostic => {
     const from = err.span.start;
     const to = Math.max(err.span.end, err.span.start + 1);
-    if (from == -1) {
+    if (from === -1) {
       return {
         from: 0, to: 0,
         severity: "error",
@@ -83,7 +83,7 @@ export const myLanguageLinter = linter((view) => {
   }).concat(interpretationWarnings.map((warn):Diagnostic => {
     const from = warn.span.start;
     const to = Math.max(warn.span.end, warn.span.start + 1);
-    if (from == -1) {
+    if (from === -1) {
       return {
         from: 0, to: 0,
         severity: "error",

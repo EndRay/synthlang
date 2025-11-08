@@ -59,6 +59,8 @@ export interface SynthStructure {
   userInputNames: string[],
   userOutputNames: string[],
   userPerVoiceInputNames: string[],
+  userCustomInputNames: string[],
+  userCustomInputIds: number[],
   objects: StructureObject<false>[],
   recalculationOrder: number[],
 }

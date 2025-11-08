@@ -23,6 +23,7 @@ import {ParseResult} from "./Parser";
 import {canBeInput, canBeOutput, getOutput, getSocket, SoundNodeClassInfo} from "./SoundNodeClassInfo";
 import {GLOBAL_BUILTIN, VOICE_BUILTIN} from "./builtin";
 import {Span} from "./Span";
+import {classesAlias} from "./classes";
 
 interface ExpressionTypeInfo {
   canBeInput: boolean;
@@ -84,6 +85,10 @@ export class Resolver implements ASTNodeVisitor<visitorContext> {
     for (const cls of classesList) {
       this.resolvedClasses.set(cls.className, cls);
     }
+    for (const [className, cls] of classesAlias) {
+      this.resolvedClasses.set(className, cls);
+    }
+    console.log(this.resolvedClasses);
     for (const [builtinName, builtinClass] of GLOBAL_BUILTIN.entries()) {
       const resolution: BuiltinResolution = {
         type: "builtin",
@@ -256,7 +261,9 @@ export class Resolver implements ASTNodeVisitor<visitorContext> {
       expressionType: exprType,
       declaration,
     }
-    context.currentScope.set(constName, resolution);
+    if(constName !== "_") {
+      context.currentScope.set(constName, resolution);
+    }
     this.expressionsType.set(node, exprType);
     if (!cls) {
       this.errors.push({
@@ -290,6 +297,18 @@ export class Resolver implements ASTNodeVisitor<visitorContext> {
     const constName = node.name.name;
     const span = node.name.span;
 
+    if (constName === "_") {
+      this.errors.push({
+        message: `Identifier '_' cannot be defined as a constant`,
+        span: node.name.span,
+      });
+      this.expressionsType.set(node, {
+        canBeInput: false,
+        canBeOutput: false,
+        nodeClass: null,
+      });
+      return;
+    }
     if (context.currentScope.has(constName)) {
       this.errors.push({
         message: `Identifier already defined in this scope: ${constName}`,
@@ -325,7 +344,7 @@ export class Resolver implements ASTNodeVisitor<visitorContext> {
       nodeClass: null,
     });
     const objectIdentifier = node.object;
-    const res = this.resolveIdentifier(objectIdentifier.name, context);
+    const res = this.resolveIdentifier(objectIdentifier.name, context, objectIdentifier.span);
     if (!res) {
       this.errors.push({
         message: `Undefined identifier: ${objectIdentifier.name}`,
@@ -357,7 +376,7 @@ export class Resolver implements ASTNodeVisitor<visitorContext> {
       nodeClass: null,
     })
     const objectIdentifier = node.object;
-    const res = this.resolveIdentifier(objectIdentifier.name, context);
+    const res = this.resolveIdentifier(objectIdentifier.name, context, objectIdentifier.span);
     if (!res) {
       this.errors.push({
         message: `Undefined identifier: ${objectIdentifier.name}`,
@@ -384,7 +403,7 @@ export class Resolver implements ASTNodeVisitor<visitorContext> {
 
   visitConstAccess(node: ConstAccess, context: visitorContext): void {
     const objectIdentifier = node.name;
-    const res = this.resolveIdentifier(objectIdentifier.name, context);
+    const res = this.resolveIdentifier(objectIdentifier.name, context, objectIdentifier.span);
     if (!res) {
       this.errors.push({
         message: `Undefined identifier: ${objectIdentifier.name}`,
@@ -400,7 +419,13 @@ export class Resolver implements ASTNodeVisitor<visitorContext> {
     this.expressionsType.set(node, res.expressionType);
   }
 
-  resolveIdentifier(name: string, context: visitorContext): IdentifierResolution | null {
+  resolveIdentifier(name: string, context: visitorContext, span: Span): IdentifierResolution | null {
+    if(name === "_") {
+      this.errors.push({
+        message: `Identifier '_' cannot be accessed`,
+        span: span,
+      });
+    }
     for (const scope of context.accessibleScopes) {
       if (scope.has(name)) {
         return scope.get(name)!;

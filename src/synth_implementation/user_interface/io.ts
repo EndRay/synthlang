@@ -1,9 +1,9 @@
-import {SoundNodeClassInfo} from "../../language/SoundNodeClassInfo";
 import {
   UserInput as UserInputInfo,
   UserStereoInput as UserStereoInputInfo,
   UserOutput as UserOutputInfo,
-  UserStereoOutput as UserStereoOutputInfo
+  UserStereoOutput as UserStereoOutputInfo,
+  KnobClass as KnobInfo
 } from "../../language/classes";
 import {SoundNode} from "../SoundNode";
 
@@ -70,4 +70,9 @@ export class UserStereoOutput implements SoundNode {
     this.left = socketsValues[0];
     this.right = socketsValues[1];
   }
+}
+
+export class Knob extends UserInput {
+  static info = KnobInfo;
+  info = () => KnobInfo;
 }

@@ -32,7 +32,7 @@ import {
 import {SoundNodeClassInfo} from "./SoundNodeClassInfo";
 import {
   AttenuatorClass, BipolarMappingClass,
-  InverterClass,
+  InverterClass, KnobClass,
   MappingClass,
   UserInput,
   UserOutput,
@@ -91,6 +91,9 @@ export class IRBuilder implements ASTNodeVisitor<BuilderContext, ExpressionValue
     const userPerVoiceInputNames: string[] = [];
     const userOutputNames: string[] = [];
 
+    const userCustomInputNames: string[] = [];
+    const userCustomInputIds: number[] = [];
+
     const totalBuiltInObjects = () => userInputNames.length + userOutputNames.length + userPerVoiceInputNames.length;
 
     this.resolvedClasses.set(UserInput.className, UserInput);
@@ -99,7 +102,7 @@ export class IRBuilder implements ASTNodeVisitor<BuilderContext, ExpressionValue
     this.resolvedClasses.set(UserStereoOutput.className, UserStereoOutput);
 
     for (const [builtinName, builtinClass] of GLOBAL_BUILTIN.entries()) {
-      if (builtinClass == UserInput || builtinClass == UserStereoInput) {
+      if (builtinClass === UserInput || builtinClass === UserStereoInput) {
         userInputNames.push(builtinName);
         const objectId = this.createObject(builtinClass.className, false, {start: -1, end: -1});
         this.setConst(builtinName, {
@@ -110,7 +113,7 @@ export class IRBuilder implements ASTNodeVisitor<BuilderContext, ExpressionValue
       }
     }
     for (const [builtinName, builtinClass] of GLOBAL_BUILTIN.entries()) {
-      if (builtinClass == UserOutput || builtinClass == UserStereoOutput) {
+      if (builtinClass === UserOutput || builtinClass === UserStereoOutput) {
         userOutputNames.push(builtinName);
         const objectId = this.createObject(builtinClass.className, false, {start: -1, end: -1});
         this.setConst(builtinName, {
@@ -121,7 +124,7 @@ export class IRBuilder implements ASTNodeVisitor<BuilderContext, ExpressionValue
       }
     }
     for (const [builtinName, builtinClass] of VOICE_BUILTIN.entries()) {
-      if (builtinClass == UserInput || builtinClass == UserStereoInput) {
+      if (builtinClass === UserInput || builtinClass === UserStereoInput) {
         userPerVoiceInputNames.push(builtinName);
         const objectId = this.createObject(builtinClass.className, true, {start: -1, end: -1});
         this.setConst(builtinName, {
@@ -132,13 +135,29 @@ export class IRBuilder implements ASTNodeVisitor<BuilderContext, ExpressionValue
       }
     }
     for (const [_builtinName, builtinClass] of VOICE_BUILTIN.entries()) {
-      if (builtinClass == UserOutput || builtinClass == UserStereoOutput) {
+      if (builtinClass === UserOutput || builtinClass === UserStereoOutput) {
         throw new Error("Voice-level outputs are not supported");
       }
     }
 
     for (const line of this.ast.lines) {
       this.visit(line.statement, {isVoice: line.isVoice});
+    }
+
+    for(const [constName, constValue] of this.globalConstNameToValue.entries()) {
+      if(constValue.type === "ObjectExpression" && this.objects[constValue.objectId].className === KnobClass.className) {
+        userCustomInputNames.push(constName);
+        userCustomInputIds.push(constValue.objectId);
+      }
+    }
+
+    for(const [constName, constValue] of this.voiceConstNameToValue.entries()) {
+      if(constValue.type === "ObjectExpression" && this.objects[constValue.objectId].className === KnobClass.className) {
+        this.interpretationErrors.push({
+          message: "Voice-level custom inputs are not supported",
+          span: constValue.span!,
+        });
+      }
     }
 
     const recalculationOrder = this.defineOrder(this.getConst("output", false)! as ObjectExpression);
@@ -180,6 +199,7 @@ export class IRBuilder implements ASTNodeVisitor<BuilderContext, ExpressionValue
     return {
       structure: this.interpretationErrors.length === 0 ? {
         userInputNames, userPerVoiceInputNames, userOutputNames,
+        userCustomInputNames, userCustomInputIds,
         objects: finalObjects,
         recalculationOrder,
       } : null,
@@ -505,6 +525,9 @@ export class IRBuilder implements ASTNodeVisitor<BuilderContext, ExpressionValue
   }
 
   setConst(name: string, value: ExpressionValue<true>, isVoice: boolean) {
+    if (name === "_") {
+      return;
+    }
     const constMap =
       isVoice ? this.voiceConstNameToValue : this.globalConstNameToValue;
     constMap.set(name, value);

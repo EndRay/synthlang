@@ -310,21 +310,6 @@ export class Parser {
           inExpr: parsedExpr.inExpr, outExpr: parsedExpr.outExpr
         };
       }
-      token = this.match("keyword", "new");
-      if (token) {
-        const className = this.expect("identifier");
-        this.expect("punctuation", "(");
-        const args = this.parseArgs();
-        return {
-          expr: {
-            type: "Construction",
-            className: this.tokenToIdentifier(className),
-            ...args,
-            span: {start: token.span.start, end: this.tokens[this.pos - 1].span.end}
-          }, inExpr: true, outExpr: true
-        };
-
-      }
       token = this.match("identifier");
       if (token) {
         let next = this.match("punctuation", ".");

@@ -9,7 +9,6 @@
 
 <const-definition>   ::= identifier '=' (<out-expr> | <in-expr>)
 <const-construction> ::= identifier identifier '(' <args> ')'
-<construction>       ::= 'new' identifier '(' <args> ')'
 
 <chain>              ::= <out-expr> ('=>' <mid-expr>)* '=>' <in-expr>
 <reverse-chain>      ::= <in-expr> ('<=' <mid-expr>)* '<=' <out-expr>
@@ -69,13 +68,11 @@ should work the same as
 mod = (lfo1 + lfo2) bi[-3semi, 3semi]
 ```
 
-Remove "new" keyword and add "_" functionality.
-
-Add class name aliases.
-
 Make it possible to use sockets and outputs in chains, e.g. 
 ```
 osc => stereoFilter.left :lowpass => output.left
 ```
 
-Multiplying and addition incorrectly works for stereo outputs.
+Bug: Multiplying and addition incorrectly works for stereo outputs.
+Bug: React error when definition uses itself as argument (should be interpretation error).
+Bug: Wrong coloring when both global and voice block consts with the same name are defined. 

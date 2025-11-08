@@ -12,3 +12,8 @@
 .App-link {
   color: #61dafb;
 }
+
+html {
+  scrollbar-width: thin; /* Can be "auto", "thin", or "none" */
+  scrollbar-color: #474e5c #22272e; /* thumb color track color */
+}

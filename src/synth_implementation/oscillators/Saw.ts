@@ -4,7 +4,7 @@ import {toHertz} from "../conversions";
 import {SAMPLE_RATE} from "../constants";
 
 const INFO: SoundNodeClassInfo = {
-  className: "Saw",
+  className: "Sawtooth",
   classGroup: "Oscillator",
   sockets: [
     ["frequency", "freq", "f", "pitch"],
@@ -13,7 +13,7 @@ const INFO: SoundNodeClassInfo = {
   positionalArgs: ["frequency"],
 }
 
-export class Saw implements SoundNode {
+export class Sawtooth implements SoundNode {
   static info = INFO;
   info = () => INFO;
 
