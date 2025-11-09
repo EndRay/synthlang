@@ -30,6 +30,30 @@ import {KnobContainer} from "./components/knob_container/KnobContainer";
 import {Help} from "./components/help/Help";
 import "./styles/groupColors.css"
 
+registerSoundNode(Mix.info, () => new Mix());
+registerSoundNode(StereoMix.info, () => new StereoMix());
+
+registerSoundNode(WhiteNoise.info, () => new WhiteNoise());
+
+registerSoundNode(Sawtooth.info, () => new Sawtooth());
+registerSoundNode(Square.info, () => new Square());
+registerSoundNode(Triangle.info, () => new Triangle());
+registerSoundNode(Sine.info, () => new Sine());
+
+registerSoundNode(LowPass12db.info, () => new LowPass12db());
+registerSoundNode(LowPass24db.info, () => new LowPass24db());
+
+registerSoundNode(ADSRlin.info, () => new ADSRlin());
+registerSoundNode(ADSRlog.info, () => new ADSRlog());
+
+registerSoundNode(Delay.info, () => new Delay());
+registerSoundNode(PingPongDelay.info, () => new PingPongDelay());
+
+registerSoundNodeClassAlias("Sqr", "Square");
+registerSoundNodeClassAlias("Tri", "Triangle");
+registerSoundNodeClassAlias("Sin", "Sine");
+registerSoundNodeClassAlias("Saw", "Sawtooth");
+registerSoundNodeClassAlias("ADSR", "ADSRlog");
 
 export default function App() {
   const synthRef = useRef<Synth | null>(null);
@@ -89,33 +113,6 @@ export default function App() {
     setCode(newCode);
     localStorage.setItem("synthCode", newCode);
   }
-
-  useEffect(() => {
-    registerSoundNode(Mix.info, () => new Mix());
-    registerSoundNode(StereoMix.info, () => new StereoMix());
-
-    registerSoundNode(WhiteNoise.info, () => new WhiteNoise());
-
-    registerSoundNode(Sawtooth.info, () => new Sawtooth());
-    registerSoundNode(Square.info, () => new Square());
-    registerSoundNode(Triangle.info, () => new Triangle());
-    registerSoundNode(Sine.info, () => new Sine());
-
-    registerSoundNode(LowPass12db.info, () => new LowPass12db());
-    registerSoundNode(LowPass24db.info, () => new LowPass24db());
-
-    registerSoundNode(ADSRlin.info, () => new ADSRlin());
-    registerSoundNode(ADSRlog.info, () => new ADSRlog());
-
-    registerSoundNode(Delay.info, () => new Delay());
-    registerSoundNode(PingPongDelay.info, () => new PingPongDelay());
-
-    registerSoundNodeClassAlias("Sqr", "Square");
-    registerSoundNodeClassAlias("Tri", "Triangle");
-    registerSoundNodeClassAlias("Sin", "Sine");
-    registerSoundNodeClassAlias("Saw", "Sawtooth");
-    registerSoundNodeClassAlias("ADSR", "ADSRlog");
-  }, []);
 
   const rebuildSynth = (tryStartAudio=true) => {
     const lexResult = new Lexer(code).lex();
