@@ -18,5 +18,5 @@
 }
 
 .cm-diagnostic-unused span {
-    color: #797d84 !important;
+    color: var(--unused-color) !important;
 }

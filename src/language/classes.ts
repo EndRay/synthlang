@@ -94,6 +94,9 @@ export const classesList: SoundNodeClassInfo[] = [
 export const classesAlias: Map<string, SoundNodeClassInfo> = new Map();
 
 export function registerSoundNodeClass(cls: SoundNodeClassInfo) {
+  if (classesList.find(existingCls => existingCls.className === cls.className)) {
+    return;
+  }
   classesList.push(cls);
 }
 

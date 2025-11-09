@@ -1,0 +1,80 @@
+.documentation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px
+}
+
+.documentation-group-container,
+.documentation-class-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    cursor: pointer;
+    user-select: none;
+}
+
+.documentation-group-name,
+.documentation-class-name {
+    font: 24px 'Roboto Mono', monospace;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    background-color: hsl(218, 16%, 10%);
+    display: flex;
+    align-items: center;
+
+    transition: background-color 0.2s ease-in-out;
+}
+
+
+.documentation-group-name.current,
+.documentation-class-name.current {
+    background-color: hsl(218, 10%, 6%);
+}
+
+.documentation-group-name:hover,
+.documentation-class-name:hover {
+    background-color: hsl(218, 16%, 24%);
+}
+
+.documentation-group-name:active,
+.documentation-class-name:active {
+    background-color: hsl(218, 16%, 12%);
+}
+
+.documentation-class-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.documentation-class-name {
+    font-size: 18px;
+}
+
+.documentation-class-description,
+.documentation-class-list {
+    max-height: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    transition: max-height 0.2s ease, opacity 0.2s ease, margin 0.2s ease;
+    margin-left: 20px;
+    opacity: 0;
+}
+
+.documentation-class-description.expanded,
+.documentation-class-list.expanded {
+    margin-top: 10px;
+    max-height: 1000px; /* large enough to fit content */
+    opacity: 1;
+}
+
+.documentation-class-description .documentation-class-description-content {
+    font: 16px 'Roboto Mono', monospace;
+    background-color: hsl(218, 16%, 10%);
+    padding: 10px;
+    border-radius: 16px;
+    user-select: text;
+    cursor: default;
+}

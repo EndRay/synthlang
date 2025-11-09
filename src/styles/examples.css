@@ -1,0 +1,27 @@
+.examples-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    user-select: none;
+}
+
+.example-name {
+    font: 24px 'Roboto Mono', monospace;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    background-color: hsl(218, 16%, 10%);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    transition: background-color 0.2s ease-in-out;
+}
+
+.example-name:hover {
+    background-color: hsl(218, 16%, 24%);
+}
+
+.example-name:active {
+    background-color: hsl(218, 16%, 12%);
+}

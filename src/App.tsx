@@ -27,6 +27,8 @@ import {Delay} from "./synth_implementation/effects/Delay";
 import {PingPongDelay} from "./synth_implementation/effects/PingPongDelay";
 import Oscilloscope, {OSCILLOSCOPE_DATA_SIZE} from "./components/Oscilloscope";
 import {KnobContainer} from "./components/knob_container/KnobContainer";
+import {Help} from "./components/help/Help";
+import "./styles/groupColors.css"
 
 
 export default function App() {
@@ -81,7 +83,7 @@ export default function App() {
   }
 
   const [synthCode, setSynthCode] = useState("");
-  const [code, setCode] = useState(localStorage.getItem("synthCode") || initialCode);
+  const [code, setCode] = useState(localStorage.getItem("synthCode") || "");
 
   const changeCode = (newCode: string) => {
     setCode(newCode);
@@ -177,12 +179,13 @@ export default function App() {
       {/*/>*/}
       <div style={{
         display: "grid",
-        gap: "10px",
-        gridTemplateRows: "auto auto",
-        gridTemplateColumns: "auto auto",
+        gap: "20px 10px",
+        gridTemplateRows: "auto 600px",
+        gridTemplateColumns: "800px 600px",
         height: "100%",
         padding: "10px",
-        boxSizing: "border-box"
+        boxSizing: "border-box",
+        justifyItems: "center",
       }}>
         <KnobContainer
           knobValues={knobValues}
@@ -212,35 +215,21 @@ export default function App() {
             }}
           />
         </div>
-        <div style={{gridColumn: "span 2", display: "flex", justifyContent: "center"}}>
-          <SynthCodeEditor
-            ref={editorRef}
-            value={code}
-            synthCode={synthCode}
-            onChange={changeCode}
-            changeFocus={() => {
-              musicKeyboardRef.current?.focus();
-            }}
-            rebuildSynth={rebuildSynth}
-          />
-        </div>
+        <SynthCodeEditor
+          ref={editorRef}
+          value={code}
+          synthCode={synthCode}
+          onChange={changeCode}
+          changeFocus={() => {
+            musicKeyboardRef.current?.focus();
+          }}
+          rebuildSynth={rebuildSynth}
+        />
+        <Help
+          setCode={changeCode}
+        />
       </div>
     </div>
   )
     ;
 }
-
-const initialCode = `
-PingPongDelay delay(400ms, 0.7)
-Mix voiceMix()
-startvoice
-ADSRlog env(1ms, 1000ms, 0.4, 3000ms, .gate=gate)
-oscMix = Saw osc(pitch) + Saw osc2(pitch + 12semi + 10cent)
-LowPass12db filter(env [200hz, 7000hz])
-oscMix => filter
-          filter * env * 0.1 => voiceMix
-endvoice
-voiceMix => output
-voiceMix => delay => output
-
-`.trim()

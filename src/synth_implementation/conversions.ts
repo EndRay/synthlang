@@ -55,6 +55,13 @@ export function toHours(value: number): number {
   return toSeconds(value) / 3600;
 }
 
+export function fromRateCoefficient(x: number) {
+  return Math.log2(x);
+}
+export function toRateCoefficient(value: number) {
+  return Math.pow(2, value);
+}
+
 export function convertConstant(constant: ConstantNumber) {
   switch (constant.unit) {
     case "": return constant.value;
@@ -66,6 +73,7 @@ export function convertConstant(constant: ConstantNumber) {
     case "h": return fromHours(constant.value);
     case "semi": return fromSemitones(constant.value);
     case "cent": return fromCents(constant.value);
+    case "x": return fromRateCoefficient(constant.value);
     default: {
       console.log(`Unknown unit: ${constant.unit}`); return constant.value;
     }

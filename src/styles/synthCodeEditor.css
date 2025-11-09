@@ -12,3 +12,11 @@ button.rebuild {
 button.rebuild:disabled {
     opacity: 65%;
 }
+
+.cm-editor {
+    background-color: hsl(218, 16%, 16%);
+}
+
+.ͼo .cm-gutters {
+    background-color: hsl(218, 16%, 14%);
+}

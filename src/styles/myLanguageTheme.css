@@ -32,11 +32,11 @@
 
 
 .cm-editor .tok-socket {
-    color: hsl(0, 100%, 85%);
+    color: var(--socket-color);
 }
 
 .cm-editor .tok-output {
-    color: hsl(217, 96%, 82%);
+    color: var(--output-color);
 }
 
 .cm-editor .tok-constdef {
@@ -52,22 +52,22 @@
 }
 
 .cm-editor .tok-class-Oscillator {
-    color: hsl(112, 54%, 56%);
+    color: var(--class-color-Oscillator);
 }
 .cm-editor .tok-class-Envelope {
-    color: hsl(0, 100%, 73%);
+    color: var(--class-color-Envelope);
 }
 .cm-editor .tok-class-Filter {
-    color: hsl(211, 100%, 62%);
+    color: var(--class-color-Filter);
 }
 .cm-editor .tok-class-Effect {
-    color: hsl(47, 96%, 74%);
+    color: var(--class-color-Effect);
 }
 .cm-editor .tok-class-UserInterface {
-    color: hsl(284, 100%, 78%);
+    color: var(--class-color-UserInterface);
 }
 .cm-editor .tok-class-Utility {
-    color: hsl(163, 100%, 88%);
+    color: var(--class-color-Utility);
 }
 
 .cm-editor .tok-const.tok-known-class,

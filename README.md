@@ -73,6 +73,6 @@ Make it possible to use sockets and outputs in chains, e.g.
 osc => stereoFilter.left :lowpass => output.left
 ```
 
-Bug: Multiplying and addition incorrectly works for stereo outputs.
+Bug: Multiplying and addition incorrectly works for stereo outputs. (also stereo to mono should not just add them, but take the mean).
 Bug: React error when definition uses itself as argument (should be interpretation error).
 Bug: Wrong coloring when both global and voice block consts with the same name are defined. 

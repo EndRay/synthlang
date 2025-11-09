@@ -1,0 +1,13 @@
+html {
+    --class-color-Envelope: hsl(0, 100%, 73%);
+    --class-color-Filter: hsl(211, 100%, 62%);
+    --class-color-Oscillator: hsl(112, 54%, 56%);
+    --class-color-Effect: hsl(47, 96%, 74%);
+    --class-color-UserInterface: hsl(284, 100%, 78%);
+    --class-color-Utility: hsl(163, 100%, 88%);
+    --class-color-Noise: hsl(30, 50%, 35%);
+
+    --socket-color: hsl(0, 100%, 85%);
+    --output-color: hsl(217, 96%, 82%);
+    --unused-color: hsl(218, 4%, 50%)
+}

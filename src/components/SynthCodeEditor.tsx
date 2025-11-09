@@ -54,7 +54,6 @@ export const SynthCodeEditor = forwardRef<ReactCodeMirrorRef, SynthCodeEditorPro
   return (
     <div style={{
       height: "600px",
-      maxWidth: "800px",
       width: "100%",
       display: "flex",
       flexDirection: "column"

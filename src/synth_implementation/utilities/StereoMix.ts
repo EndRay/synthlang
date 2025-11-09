@@ -2,7 +2,7 @@ import { SoundNode } from "../SoundNode";
 
 const INFO = {
   className: "StereoMix",
-  classGroup: "Utilities",
+  classGroup: "Utility",
   sockets: ["left", "right"],
   outputs: ["left", "right"],
   positionalArgs: ["left", "right"],
